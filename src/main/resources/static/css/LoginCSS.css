@@ -1,0 +1,10 @@
+#j1,#j2{
+    background-image: url("../images/bg.jpg");
+}
+
+#head1{
+    background-image: url("../images/headbg.jpg");
+    background-repeat: no-repeat;
+    height: 500px;
+    background-size: cover;
+}
