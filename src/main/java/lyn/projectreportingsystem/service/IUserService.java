@@ -4,5 +4,9 @@ import lyn.projectreportingsystem.pojo.User;
 
 public interface IUserService {
 
-    User SelectUser(String email, String password);
+    User SelectUserByEmailPassword(String email, String password);
+
+    User SelectUserByEmail(String email);
+
+    int InsertUser(User user);
 }

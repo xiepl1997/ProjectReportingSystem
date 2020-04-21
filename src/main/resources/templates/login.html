@@ -44,11 +44,13 @@
     <div class="row clearfix">
         <div class="col-md-3"></div>
         <div class="col-lg-6 colume">
+<!--            如果注册异常            -->
+            <p style="float: top;text-align: center;font-family: 等线;background-color: hotpink;border-radius: 5px;" th:text="${msg_register}" th:if="${not #strings.isEmpty(msg_register)}"></p>
             <div id="j2" class="jumbotron">
                 <h3 style="font-family: 华文琥珀;">注册</h3>
                 <form id="RegisterForm" role="form" method="post" action="/register">
                     <div class="form-group">
-                        <label for="exampleInputId1">邮箱</label><input name="id" type="email" class="form-control" id="exampleInputId1" required/>
+                        <label for="exampleInputId1">邮箱</label><input name="email" type="email" class="form-control" id="exampleInputId1" required/>
                         <label for="InputName">姓名</label><input name="name" type="text" class="form-control" id="InputName" required/>
                         <label for="exampleInputPassword1">密码</label><input name="password" type="password" class="form-control" id="exampleInputPassword1" required minlength="6" />
                         <label for="InputRepeatPassword">重复密码</label><input name="password" type="password" class="form-control" id="InputRepeatPassword" required minlength="6" />
@@ -56,7 +58,7 @@
                         <label for="InputPhone">电话号码</label><input name="phone" type="text" size="11" class="form-control" id="InputPhone" required minlength="11" maxlength="11" />
                         <label class="control-label">性别</label><br>
                         <label class="radio-inline"><input name="type" type="radio" value="男" checked>男</label>
-                        <label class="radio-inline"><input name="type" type="radio" value="女">女</label>
+                        <label class="radio-inline"><input name="type" type="radio" value="女">女</label><br>
                         <label for="school">学校</label><input name="school" class="form-control" id="school" required/>
                         <label for="college">学院</label><input name="college" class="form-control" id="college" required/>
                     </div>

@@ -13,7 +13,17 @@ public class UserService implements IUserService {
     private UserMapper userMapper;
 
     @Override
-    public User SelectUser(String email, String password) {
-        return userMapper.SelectUser(email, password);
+    public User SelectUserByEmailPassword(String email, String password) {
+        return userMapper.SelectUserByEmailPassword(email, password);
+    }
+
+    @Override
+    public User SelectUserByEmail(String email) {
+        return userMapper.SelectUserByEmail(email);
+    }
+
+    @Override
+    public int InsertUser(User user) {
+        return userMapper.InsertUser(user);
     }
 }
