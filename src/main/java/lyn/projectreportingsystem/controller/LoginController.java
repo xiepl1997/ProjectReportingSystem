@@ -6,11 +6,13 @@ import lyn.projectreportingsystem.util.CookieUtil;
 import lyn.projectreportingsystem.util.MD5;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Map;
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class LoginController {
@@ -19,26 +21,36 @@ public class LoginController {
     private UserService userService = null;
 
     @RequestMapping("/")
-    public String home(){
+    public String home() {
         return "login";
     }
 
     @RequestMapping("/login")
     public String login(@RequestParam("email") String email,
                         @RequestParam("password") String password,
-                        Map<String, Object> map,
-                        HttpServletResponse response){
+                        Model model,
+                        HttpServletResponse response,
+                        HttpServletRequest request) {
         password = MD5.getMD5(password);
         User user = userService.SelectUserByEmailPassword(email, password);
-        if(user == null){
-            map.put("msg", "账号或密码不正确！");
+        if (user == null) {
+            model.addAttribute("msg", "账号或密码不正确！");
             return "login";
         }
+
+        HttpSession session = request.getSession();
+        session.setAttribute("user", user);
+
         //设置cookie
-        CookieUtil.setCookie(response, "email", email, 60*60*24*2); //保存2天
-        CookieUtil.setCookie(response, "password", password, 60*60*24*2);
-        map.put("user", user);
-        return "main";
+//        CookieUtil.setCookie(response, "email", user.getEmail(), 60*60*24*2); //保存2天
+//        CookieUtil.setCookie(response, "name", user.getName(), 60*60*24*2);
+//        CookieUtil.setCookie(response, "password", user.getPassword(), 60*60*24*2);
+//        CookieUtil.setCookie(response, "phone", user.getPhone(), 60*60*24*2);
+//        CookieUtil.setCookie(response, "sex", user.getSex(), 60*60*24*2);
+//        CookieUtil.setCookie(response, "school", user.getSchool(), 60*60*24*2);
+//        CookieUtil.setCookie(response, "college", user.getCollege(), 60*60*24*2);
+
+        return "redirect:/main.html";
     }
 
     @RequestMapping("/register")
@@ -50,24 +62,34 @@ public class LoginController {
                            @RequestParam("school") String school,
                            @RequestParam("college") String college,
                            HttpServletResponse response,
-                           Map<String, Object> map){
+                           HttpServletRequest request,
+                           Model model) {
         password = MD5.getMD5(password);
         User user = userService.SelectUserByEmail(email);
-        if(user != null){
-            map.put("msg", "该邮箱已被注册！");
+        if (user != null) {
+            model.addAttribute("msg", "该邮箱已被注册！");
             return "login";
         }
         user = new User(email, name, password, phone, sex, school, college);
-        try{
+        try {
             userService.InsertUser(user);
-        }catch (Exception e){
-            map.put("msg", "错误！请重试！");
+        } catch (Exception e) {
+            model.addAttribute("msg", "错误！请重试！");
             return "login";
         }
-        map.put("user", user);
-        CookieUtil.setCookie(response, "email", email, 60*60*24*2); //保存2天
-        CookieUtil.setCookie(response, "password", password, 60*60*24*2);
-        return "main";
+
+        HttpSession session = request.getSession();
+        session.setAttribute("user", user);
+
+//        CookieUtil.setCookie(response, "email", user.getEmail(), 60*60*24*2); //保存2天
+//        CookieUtil.setCookie(response, "name", user.getName(), 60*60*24*2);
+//        CookieUtil.setCookie(response, "password", user.getPassword(), 60*60*24*2);
+//        CookieUtil.setCookie(response, "phone", user.getPhone(), 60*60*24*2);
+//        CookieUtil.setCookie(response, "sex", user.getSex(), 60*60*24*2);
+//        CookieUtil.setCookie(response, "school", user.getSchool(), 60*60*24*2);
+//        CookieUtil.setCookie(response, "college", user.getCollege(), 60*60*24*2);
+
+        return "redirect:/main.html";
     }
 
 }

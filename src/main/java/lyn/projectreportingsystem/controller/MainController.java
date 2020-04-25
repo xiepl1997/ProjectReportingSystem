@@ -5,10 +5,12 @@ import lyn.projectreportingsystem.service.impl.UserService;
 import lyn.projectreportingsystem.util.CookieUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 @Controller
@@ -18,21 +20,24 @@ public class MainController {
     private UserService userService = null;
 
     @RequestMapping("/main")
-    public String mainPage(HttpServletRequest request, Map<String, Object> map){
-        Map<String, String> cookie_map = CookieUtil.getCookies(request);
-        String email = cookie_map.get("email");
-        String password = cookie_map.get("password");
-        User user = null;
-        if(email != null && password != null){
-            user = userService.SelectUserByEmailPassword(email, password);
-            if(user == null)
-                return "login";
-            else{
-                map.put("user", user);
-                return "main";
-            }
-        }
-        return "logon";
+    public String mainPage(HttpServletRequest request,
+                           Model model){
+//        HttpSession session = request.getSession();
+//        Object user = session.getAttribute("user");
+//        if(user != null){
+//            user = userService.SelectUserByEmailPassword(((User) user).getEmail(), ((User) user).getPassword());
+//            if(user == null)
+//                return "redirect:/login.html";
+//            else{
+//                return "main";
+//            }
+//        }
+//        return "redirect:/login.html";
+
+        HttpSession session = request.getSession();
+        Object user = session.getAttribute("user");
+        return "main";
+
     }
 
 }
