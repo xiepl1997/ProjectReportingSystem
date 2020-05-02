@@ -15,7 +15,9 @@ public class MyWebConfigurer implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/login.html").setViewName("login");
-        registry.addViewController("/main.html").setViewName("main");
+        registry.addViewController("/index.html").setViewName("index");
+        registry.addViewController("/members.html").setViewName("members");
+        registry.addViewController("/projectform.html").setViewName("projectform");
     }
 
     /**
@@ -27,6 +29,7 @@ public class MyWebConfigurer implements WebMvcConfigurer {
         //注意不拦截css和js
         registry.addInterceptor(new LoginInterceptor())
                 .addPathPatterns("/**")
-                .excludePathPatterns("/", "/login", "/register", "static/**", "/bootstrap-3.3.7-dist/**","/css/**","/images/**","/layui/**");
+                .excludePathPatterns("/", "/login", "/register", "static/**", "/bootstrap-3.3.7-dist/**","/css/**",
+                        "/images/**","/assets/**", "/js/**");
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,7 +30,7 @@ public class LoginController {
     public String login(@RequestParam("email") String email,
                         @RequestParam("password") String password,
                         Model model,
-                        HttpServletResponse response,
+                        RedirectAttributes redirectAttributes,
                         HttpServletRequest request) {
         password = MD5.getMD5(password);
         User user = userService.SelectUserByEmailPassword(email, password);
@@ -41,16 +42,9 @@ public class LoginController {
         HttpSession session = request.getSession();
         session.setAttribute("user", user);
 
-        //设置cookie
-//        CookieUtil.setCookie(response, "email", user.getEmail(), 60*60*24*2); //保存2天
-//        CookieUtil.setCookie(response, "name", user.getName(), 60*60*24*2);
-//        CookieUtil.setCookie(response, "password", user.getPassword(), 60*60*24*2);
-//        CookieUtil.setCookie(response, "phone", user.getPhone(), 60*60*24*2);
-//        CookieUtil.setCookie(response, "sex", user.getSex(), 60*60*24*2);
-//        CookieUtil.setCookie(response, "school", user.getSchool(), 60*60*24*2);
-//        CookieUtil.setCookie(response, "college", user.getCollege(), 60*60*24*2);
 
-        return "redirect:/main.html";
+
+        return "redirect:/index.html";
     }
 
     @RequestMapping("/register")
@@ -89,7 +83,7 @@ public class LoginController {
 //        CookieUtil.setCookie(response, "school", user.getSchool(), 60*60*24*2);
 //        CookieUtil.setCookie(response, "college", user.getCollege(), 60*60*24*2);
 
-        return "redirect:/main.html";
+        return "redirect:/index.html";
     }
 
 }
