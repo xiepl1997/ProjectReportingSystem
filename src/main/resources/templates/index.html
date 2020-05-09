@@ -72,7 +72,7 @@
             <div id="main-menu" class="main-menu collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li class="active">
-                        <a href="index.html"><i class="menu-icon fa fa-laptop"></i>Dashboard </a>
+                        <a href="/index"><i class="menu-icon fa fa-laptop"></i>Dashboard </a>
                     </li>
                     <li class="menu-title">MENU</li><!-- /.menu-title -->
                     <li class="menu-item-has-children dropdown">
@@ -137,14 +137,53 @@
 
                 </div>
             </div>
+            </div>
         </header>
         <!-- /#header -->
         <!-- Content -->
         <div class="content">
             <!-- Animated -->
             <div class="animated fadeIn">
+            <!-- 选择团队 -->
+                <div class="row" style="margin-bottom: 15px;">
+
+                    <div class="col-lg-6">
+                        <div class="dropdown">
+                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                已加入的团队
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+<!--                                <li><a href="#">Action</a></li>-->
+<!--                                <li><a href="#">Another action</a></li>-->
+<!--                                <li><a href="#">Something else here</a></li>-->
+<!--                                <li role="separator" class="divider"></li>-->
+<!--                                <li><a href="#">Separated link</a></li>-->
+                                <span th:each="t:${teamlist}">
+                                    <li><a th:text="${t?.teamname}" href="#"></a></li>
+                                </span>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
                 <!-- Widgets  -->
                 <div class="row">
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="stat-widget-one">
+                                    <div class="stat-icon dib"><i class="ti-user text-primary border-primary"></i></div>
+                                    <div class="stat-content dib">
+                                        <div class="stat-text">团队名称</div>
+                                        <div class="stat-digit" th:text="${team?.teamname}"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="col-lg-3 col-md-6">
                         <div class="card">
                             <div class="card-body">
@@ -152,7 +191,7 @@
                                     <div class="stat-icon dib"><i class="ti-user text-primary border-primary"></i></div>
                                     <div class="stat-content dib">
                                         <div class="stat-text">团队负责人</div>
-                                        <div class="stat-digit">刘于楠</div>
+                                        <div class="stat-digit" th:text="${team?.leader}"></div>
                                     </div>
                                 </div>
                             </div>
@@ -166,7 +205,7 @@
                                     <div class="stat-icon dib"><i class="pe-7s-users text-warning border-warning"></i></div>
                                     <div class="stat-content dib">
                                         <div class="stat-text">团队人数</div>
-                                        <div class="stat-digit">6</div>
+                                        <div class="stat-digit" th:text="${memberscount}"></div>
                                     </div>
                                 </div>
                             </div>
@@ -180,7 +219,7 @@
                                     <div class="stat-icon dib"><i class="fa fa-clock-o text-danger border-danger"></i></div>
                                     <div class="stat-content dib">
                                         <div class="stat-text">团队建立时间</div>
-                                        <div class="stat-digit">2020/2/23</div>
+                                        <div class="stat-digit" style="font-size: medium;" th:text="${team?.establishtime}"></div>
                                     </div>
                                 </div>
                             </div>
@@ -194,7 +233,7 @@
                                     <div class="stat-icon dib"><i class="fa fa-bookmark text-success border-success"></i></div>
                                     <div class="stat-content dib">
                                         <div class="stat-text">项目数</div>
-                                        <div class="stat-digit">4</div>
+                                        <div class="stat-digit" th:text="${projectcount}"></div>
                                     </div>
                                 </div>
                             </div>
@@ -208,7 +247,7 @@
                                     <div class="stat-icon dib"><i class="fa fa-fort-awesome text-primary border-primary"></i></div>
                                     <div class="stat-content dib">
                                         <div class="stat-text">所在高校</div>
-                                        <div class="stat-digit" style="font-size: medium;">沈阳航空航天大学</div>
+                                        <div class="stat-digit" style="font-size: medium;" th:text="${user?.school}"></div>
                                     </div>
                                 </div>
                             </div>
@@ -222,7 +261,7 @@
                                     <div class="stat-icon dib"><i class="fa fa-home text-warning border-warning"></i></div>
                                     <div class="stat-content dib">
                                         <div class="stat-text">所在院系</div>
-                                        <div class="stat-digit">计算机学院</div>
+                                        <div class="stat-digit" th:text="${user?.college}"></div>
                                     </div>
                                 </div>
                             </div>

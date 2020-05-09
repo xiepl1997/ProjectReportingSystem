@@ -1,16 +1,27 @@
 package lyn.projectreportingsystem.pojo;
 
-import java.util.Date;
 
 public class Team {
     private int teamid;
+    private String teamname;
     private String teamremark;
-    private Date establishtime;
+    private String establishtime;
+    private String leader;
 
-    public Team(int teamid, String teamremark, Date establishtime) {
+    public Team(int teamid, String teamname, String teamremark, String establishtime, String leader) {
         this.teamid = teamid;
+        this.teamname = teamname;
         this.teamremark = teamremark;
         this.establishtime = establishtime;
+        this.leader = leader;
+    }
+
+    public String getLeader(){
+        return leader;
+    }
+
+    public void setLeader(String leader){
+        this.leader = leader;
     }
 
     public int getTeamid() {
@@ -21,6 +32,14 @@ public class Team {
         this.teamid = teamid;
     }
 
+    public String getTeamname() {
+        return teamname;
+    }
+
+    public void setTeamname(String teamname) {
+        this.teamname = teamname;
+    }
+
     public String getTeamremark() {
         return teamremark;
     }
@@ -29,11 +48,11 @@ public class Team {
         this.teamremark = teamremark;
     }
 
-    public Date getEstablishtime() {
+    public String getEstablishtime() {
         return establishtime;
     }
 
-    public void setEstablishtime(Date establishtime) {
+    public void setEstablishtime(String establishtime) {
         this.establishtime = establishtime;
     }
 }
