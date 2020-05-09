@@ -9,12 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -71,6 +73,30 @@ public class MainController {
     @RequestMapping("/index/projectform")
     public String projectform(){
         return "redirect:/projectform.html";
+    }
+
+    /**
+     * 控制台更换团队时前端进行更新时数据传输
+     * @param request
+     * @return
+     */
+    @RequestMapping("/getTeamInfo")
+    @ResponseBody
+    public Object getTeamInfo(HttpServletRequest request){
+
+        //获取teamid
+        String teamid = request.getParameter("teamname").toString().split("-")[0];
+
+        Team team = teamService.getTeamByTeamid(Integer.parseInt(teamid));
+        int memberscount = teamService.getCountOfmembersByTeamid(Integer.parseInt(teamid));
+        int projectcount = projectService.getProjectCountByTeamid(Integer.parseInt(teamid));
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("projectcount", projectcount);
+        map.put("memberscount",memberscount);
+        map.put("team", team);
+
+        return map;
     }
 
 }

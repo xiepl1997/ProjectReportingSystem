@@ -160,10 +160,14 @@
 <!--                                <li role="separator" class="divider"></li>-->
 <!--                                <li><a href="#">Separated link</a></li>-->
                                 <span th:each="t:${teamlist}">
-                                    <li><a th:text="${t?.teamname}" href="#"></a></li>
+                                    <li><a href="javascript:void(0)" class="teamlist" th:text="${t?.teamid}+'-'+${t?.teamname}" ></a></li>
                                 </span>
                             </ul>
                         </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <button id="bbb"></button>
                     </div>
 
                 </div>
@@ -177,7 +181,7 @@
                                     <div class="stat-icon dib"><i class="ti-user text-primary border-primary"></i></div>
                                     <div class="stat-content dib">
                                         <div class="stat-text">团队名称</div>
-                                        <div class="stat-digit" th:text="${team?.teamname}"></div>
+                                        <div class="stat-digit tname" th:text="${team?.teamname}"></div>
                                     </div>
                                 </div>
                             </div>
@@ -191,7 +195,7 @@
                                     <div class="stat-icon dib"><i class="ti-user text-primary border-primary"></i></div>
                                     <div class="stat-content dib">
                                         <div class="stat-text">团队负责人</div>
-                                        <div class="stat-digit" th:text="${team?.leader}"></div>
+                                        <div class="stat-digit tleader" th:text="${team?.leader}"></div>
                                     </div>
                                 </div>
                             </div>
@@ -205,7 +209,7 @@
                                     <div class="stat-icon dib"><i class="pe-7s-users text-warning border-warning"></i></div>
                                     <div class="stat-content dib">
                                         <div class="stat-text">团队人数</div>
-                                        <div class="stat-digit" th:text="${memberscount}"></div>
+                                        <div class="stat-digit tmemberscount" th:text="${memberscount}"></div>
                                     </div>
                                 </div>
                             </div>
@@ -219,7 +223,7 @@
                                     <div class="stat-icon dib"><i class="fa fa-clock-o text-danger border-danger"></i></div>
                                     <div class="stat-content dib">
                                         <div class="stat-text">团队建立时间</div>
-                                        <div class="stat-digit" style="font-size: medium;" th:text="${team?.establishtime}"></div>
+                                        <div class="stat-digit tsettime" style="font-size: medium;" th:text="${team?.establishtime}"></div>
                                     </div>
                                 </div>
                             </div>
@@ -233,7 +237,7 @@
                                     <div class="stat-icon dib"><i class="fa fa-bookmark text-success border-success"></i></div>
                                     <div class="stat-content dib">
                                         <div class="stat-text">项目数</div>
-                                        <div class="stat-digit" th:text="${projectcount}"></div>
+                                        <div class="stat-digit projectcount" th:text="${projectcount}"></div>
                                     </div>
                                 </div>
                             </div>
@@ -422,6 +426,9 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
     <script src="assets/js/main.js"></script>
 
+    <script type="text/javascript" src="js/JQuery/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="js/index_function.js"></script>
+
     <!--  Chart js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.7.3/dist/Chart.bundle.min.js"></script>
 
@@ -440,7 +447,6 @@
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.js"></script>
     <script src="assets/js/init/fullcalendar-init.js"></script>
     <script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
-
 
     <script>
         //折线图
@@ -508,7 +514,8 @@
             ]
         };
         pie.setOption(option2);
-
     </script>
+
+</script>
 </body>
 </html>
