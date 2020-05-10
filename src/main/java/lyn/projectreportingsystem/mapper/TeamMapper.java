@@ -1,9 +1,8 @@
 package lyn.projectreportingsystem.mapper;
 
 import lyn.projectreportingsystem.pojo.Team;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import lyn.projectreportingsystem.pojo.User;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -33,4 +32,23 @@ public interface TeamMapper {
      */
     @Select("select count(*) from user_team where teamid=#{teamid}")
     int getCountOfmembersByTeamid(@Param("teamid") int teamid);
+
+    /**
+     * 插入user_team表
+     * @param email
+     * @param teamid
+     * @param islead
+     * @return
+     */
+    @Insert("insert into user_team(email, teamid, islead) values(#{email}, #{teamid}, #{islead})")
+    boolean insert_user_team(@Param("email") String email, @Param("teamid")String teamid, @Param("islead") int islead);
+
+    /**
+     * 插入team，成功插入后id反填到user
+     * @return
+     */
+    @Insert("insert into team(teamname,teamremark,establishtime,leader) values(#{teamname},#{teamremark},#{establishtime},#{leader})")
+    @Options(useGeneratedKeys = true, keyProperty = "teamid", keyColumn = "teamid")
+    void insertteam(Team team);
+
 }

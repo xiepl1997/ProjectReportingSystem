@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="assets/css/cs-skin-elastic.css">
     <link rel="stylesheet" href="assets/css/lib/datatable/dataTables.bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="css/membersCSS.css">
 
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
 
@@ -45,7 +46,8 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-cogs"></i>团队</a>
                         <ul class="sub-menu children dropdown-menu">
                             <li><i class="fa fa-puzzle-piece"></i><a href="/index">控制台</a></li>
-                            <li><i class="fa fa-id-badge"></i><a href="/index/members" target="_top">团队成员</a></li>
+                            <li><i class="fa fa-id-badge"></i><a href="/index/members">团队成员</a></li>
+                            <li><i class="fa fa-puzzle-piece"></i><a href="/newteam">新建团队</a></li>
                         </ul>
                     </li>
                     <li class="menu-item-has-children dropdown">
@@ -135,54 +137,40 @@
 
         <div class="content">
             <div class="animated fadeIn">
+                <div class="row" style="margin-bottom: 15px;">
+                    <div class="dropdown">
+                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            选择所在团队
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu teamdropdown" aria-labelledby="dropdownMenu1">
+                            <span th:each="t:${teamlist}">
+                                <li><a href="javascript:void(0)" class="teamlist" th:text="${t?.teamid}+'-'+${t?.teamname}" ></a></li>
+                            </span>
+                        </ul>
+                    </div>
+                </div>
+
                 <div class="row">
 
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
-                                <strong class="card-title">Data Table</strong>
+                                <strong class="card-title">Data Table </strong>
+                                <strong id="tname"></strong>
                             </div>
                             <div class="card-body">
                                 <table id="bootstrap-data-table" class="table table-striped table-bordered">
                                     <thead>
-                                        <tr>
+                                        <tr class="membertablehead">
                                             <th>姓名</th>
                                             <th>电子邮箱</th>
                                             <th>性别</th>
                                             <th>电话</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>刘于楠</td>
-                                            <td>liuyunan@163.com</td>
-                                            <td>女</td>
-                                            <td>18876543562</td>
-                                        </tr>
-                                        <tr>
-                                            <td>李花花</td>
-                                            <td>lanqinyun@126.com</td>
-                                            <td>女</td>
-                                            <td>13067543367</td>
-                                        </tr>
-                                        <tr>
-                                            <td>刘真真</td>
-                                            <td>yuhaoming@163.com</td>
-                                            <td>女</td>
-                                            <td>13087658890</td>
-                                        </tr>
-                                        <tr>
-                                            <td>徐凯</td>
-                                            <td>iloveyou@qq.com</td>
-                                            <td>男</td>
-                                            <td>18022765739</td>
-                                        </tr>
-                                        <tr>
-                                            <td>郭港华</td>
-                                            <td>zhenyanbulao@163.com</td>
-                                            <td>男</td>
-                                            <td>18890927689</td>
-                                        </tr>
+                                    <tbody class="membertable">
+
 
                                     </tbody>
                                 </table>
@@ -210,6 +198,8 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
     <script src="assets/js/main.js"></script>
 
+    <script type="text/javascript" src="js/JQuery/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="js/members_function.js"></script>
 
     <script src="assets/js/lib/data-table/datatables.min.js"></script>
     <script src="assets/js/lib/data-table/dataTables.bootstrap.min.js"></script>

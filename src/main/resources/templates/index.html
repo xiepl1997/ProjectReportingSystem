@@ -26,6 +26,7 @@
 
     <link href="https://cdn.jsdelivr.net/npm/weathericons@2.1.0/css/weather-icons.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.css" rel="stylesheet" />
+    <link href="css/indexCSS.css" rel="stylesheet">
 
    <style>
     #weatherWidget .currentDesc {
@@ -79,7 +80,8 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-cogs"></i>团队</a>
                         <ul class="sub-menu children dropdown-menu">
                             <li><i class="fa fa-puzzle-piece"></i><a href="/index">控制台</a></li>
-                            <li><i class="fa fa-id-badge"></i><a href="/index/members" target="_top">团队成员</a></li>
+                            <li><i class="fa fa-id-badge"></i><a href="/index/members">团队成员</a></li>
+                            <li><i class="fa fa-puzzle-piece"></i><a href="/newteam">新建团队</a></li>
                         </ul>
                     </li>
                     <li class="menu-item-has-children dropdown">
@@ -147,13 +149,13 @@
             <!-- 选择团队 -->
                 <div class="row" style="margin-bottom: 15px;">
 
-                    <div class="col-lg-6">
+                    <div class="col-lg-3">
                         <div class="dropdown">
                             <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                已加入的团队
+                                选择所在团队
                                 <span class="caret"></span>
                             </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <ul class="dropdown-menu teamdropdown" aria-labelledby="dropdownMenu1">
 <!--                                <li><a href="#">Action</a></li>-->
 <!--                                <li><a href="#">Another action</a></li>-->
 <!--                                <li><a href="#">Something else here</a></li>-->
@@ -166,8 +168,13 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-6">
-                        <button id="bbb"></button>
+                    <div class="col-lg-3">
+                        <div class="input-group">
+                            <input type="text" class="form-control addteamid" placeholder="输入要加入的团队编号">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default addteam" type="button">加入</button>
+                            </span>
+                        </div>
                     </div>
 
                 </div>

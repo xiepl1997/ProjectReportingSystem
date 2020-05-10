@@ -1,10 +1,7 @@
 package lyn.projectreportingsystem.mapper;
 
 import lyn.projectreportingsystem.pojo.User;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -24,4 +21,21 @@ public interface UserMapper {
 
     @Select("select u.* from user u ,user_team where user_team.teamid = #{teamid} and u.email=user_team.email")
     List<User> getMembersInSameTeamByTeamID(@Param("teamid") int teamid);
+
+    /**
+     * 选择出一个团队的负责人
+     * @param teamid
+     * @return
+     */
+    @Select("select email from user_team where teamid = #{teamid} and islead = 1")
+    String selectLeader(@Param("teamid") int teamid);
+
+    /**
+     * 删除指定团队中的指定的人
+     * @param email
+     * @param teamid
+     * @return
+     */
+    @Delete("delete from user_team where teamid = #{teamid} and email = #{email}")
+    int deleteMember(@Param("email") String email, @Param("teamid") int teamid);
 }

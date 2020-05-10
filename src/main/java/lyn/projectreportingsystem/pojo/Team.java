@@ -15,6 +15,12 @@ public class Team {
         this.establishtime = establishtime;
         this.leader = leader;
     }
+    public Team(String teamname, String teamremark, String establishtime, String leader) {
+        this.teamname = teamname;
+        this.teamremark = teamremark;
+        this.establishtime = establishtime;
+        this.leader = leader;
+    }
 
     public String getLeader(){
         return leader;

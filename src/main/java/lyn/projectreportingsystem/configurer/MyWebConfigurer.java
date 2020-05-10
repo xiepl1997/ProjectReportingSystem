@@ -18,6 +18,7 @@ public class MyWebConfigurer implements WebMvcConfigurer {
 //        registry.addViewController("/index.html").setViewName("index");
         registry.addViewController("/members.html").setViewName("members");
         registry.addViewController("/projectform.html").setViewName("projectform");
+        registry.addViewController("/newteam.html").setViewName("newteam");
     }
 
     /**
@@ -30,6 +31,6 @@ public class MyWebConfigurer implements WebMvcConfigurer {
         registry.addInterceptor(new LoginInterceptor())
                 .addPathPatterns("/**")
                 .excludePathPatterns("/", "/login", "/register", "static/**", "/bootstrap-3.3.7-dist/**","/css/**",
-                        "/images/**","/assets/**", "/js/**");
+                        "/images/**","/assets/**", "/js/**", "/templates/**");
     }
 }

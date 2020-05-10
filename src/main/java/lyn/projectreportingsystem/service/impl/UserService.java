@@ -6,6 +6,8 @@ import lyn.projectreportingsystem.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService implements IUserService {
 
@@ -25,5 +27,20 @@ public class UserService implements IUserService {
     @Override
     public int InsertUser(User user) {
         return userMapper.InsertUser(user);
+    }
+
+    @Override
+    public List<User> getMembersInSameTeamByTeamID(int teamid) {
+        return userMapper.getMembersInSameTeamByTeamID(teamid);
+    }
+
+    @Override
+    public String selectLeader(int teamid) {
+        return userMapper.selectLeader(teamid);
+    }
+
+    @Override
+    public int deleteMember(String email, int teamid) {
+        return userMapper.deleteMember(email, teamid);
     }
 }

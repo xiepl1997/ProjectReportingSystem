@@ -2,6 +2,8 @@ package lyn.projectreportingsystem.service;
 
 import lyn.projectreportingsystem.pojo.User;
 
+import java.util.List;
+
 public interface IUserService {
 
     User SelectUserByEmailPassword(String email, String password);
@@ -9,4 +11,10 @@ public interface IUserService {
     User SelectUserByEmail(String email);
 
     int InsertUser(User user);
+
+    List<User> getMembersInSameTeamByTeamID(int teamid);
+
+    String selectLeader(int teamid);
+
+    int deleteMember(String email, int teamid);
 }
