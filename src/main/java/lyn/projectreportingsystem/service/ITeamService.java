@@ -16,4 +16,10 @@ public interface ITeamService {
     boolean insert_user_team(String email, String teamid, int islead);
 
     void insertteam(Team team);
+
+    List<Team> selectteamofleader(String email);
+
+    int deleteTeam(int teamid);
+
+    int deleteUser_Team(int teamid);
 }

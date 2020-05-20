@@ -1,5 +1,6 @@
 package lyn.projectreportingsystem.controller;
 
+import lyn.projectreportingsystem.pojo.Project;
 import lyn.projectreportingsystem.pojo.Team;
 import lyn.projectreportingsystem.pojo.User;
 import lyn.projectreportingsystem.service.impl.ProjectService;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -195,6 +197,118 @@ public class MainController {
             return "false";
         }
         return String.valueOf(team.getTeamid());
+
+    }
+
+    /**
+     * myteam跳转
+     * @param request
+     * @param redirectAttributes
+     * @return
+     */
+    @RequestMapping("/myteam")
+    public String myteam(HttpServletRequest request, RedirectAttributes redirectAttributes){
+        HttpSession session = request.getSession();
+        Object user = session.getAttribute("user");
+        List<Team> teamlist = teamService.selectteamofleader(((User) user).getEmail());
+        redirectAttributes.addFlashAttribute("teamlist", teamlist);
+        return "redirect:/myteam.html";
+    }
+
+    /**
+     * 解散团队
+     * @param request
+     * @return
+     */
+    @RequestMapping("/deleteteam")
+    @ResponseBody
+    public Map<String, Object> deleteteam(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        Object user = session.getAttribute("user");
+
+        String teamid = request.getParameter("teamid");
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("status", true);
+
+        try{
+            teamService.deleteTeam(Integer.parseInt(teamid));
+            teamService.deleteUser_Team(Integer.parseInt(teamid));
+        }catch (Exception e){
+            map.put("status", false);
+        }
+
+        List<Team> teamList = teamService.selectteamofleader(((User)user).getEmail());
+        map.put("teamlist", teamList);
+
+        return map;
+    }
+
+    /**
+     * 重定向到项目列表
+     * @return
+     */
+    @RequestMapping("/index/projectlist")
+    public String projectlist(HttpServletRequest request,
+                              RedirectAttributes redirectAttributes){
+
+        HttpSession session = request.getSession();
+        Object user = session.getAttribute("user");
+
+        //获取所加入的团队
+        List<Team> team = teamService.getTeamsByUserEmail(((User)user).getEmail());
+
+        //获取用户参与的项目
+        List<Project> projectlist = projectService.getProjectByEmail(((User)user).getEmail());
+
+        redirectAttributes.addFlashAttribute("projectlist", projectlist);
+        redirectAttributes.addFlashAttribute("teamlist", team);
+
+        return "redirect:/projectlist.html";
+    }
+
+    @RequestMapping("/getteamproject")
+    @ResponseBody
+    public List<Project> getprojectlist(HttpServletRequest request){
+        String teamid = request.getParameter("teamname").split("-")[0];
+
+        HttpSession session = request.getSession();
+        Object user = session.getAttribute("user");
+
+        List<Project> projectslist = projectService.getProjectByTeamidandEmail(Integer.parseInt(teamid), ((User)user).getEmail());
+
+        return projectslist;
+    }
+
+    /**
+     * 重定向到创建项目
+     * @param request
+     * @param redirectAttributes
+     * @return
+     */
+    @RequestMapping("/creatproject")
+    public String creatproject(HttpServletRequest request,
+                               RedirectAttributes redirectAttributes){
+
+        HttpSession session = request.getSession();
+        Object user = session.getAttribute("user");
+
+        //获取所管理的团队
+        List<Team> teamlist = teamService.selectteamofleader(((User) user).getEmail());
+        List<User> userlist = new ArrayList<>();
+        if(teamlist.size() != 0){
+             userlist = userService.getMembersInSameTeamByTeamID(teamlist.get(0).getTeamid());
+        }
+
+        redirectAttributes.addFlashAttribute("teamlist", teamlist);
+        redirectAttributes.addFlashAttribute("userlist", userlist);
+
+        return "redirect:/creatproject.html";
+    }
+
+    @RequestMapping("/creatprojectgetuser")
+    @ResponseBody
+    public List<User> creatprojectgetuser(HttpServletRequest request){
 
     }
 

@@ -39,4 +39,21 @@ public class TeamService implements ITeamService {
     public void insertteam(Team team) {
         teamMapper.insertteam(team);
     }
+
+    @Override
+    public List<Team> selectteamofleader(String email) {
+        return teamMapper.selectteamofleader(email);
+    }
+
+    @Override
+    public int deleteTeam(int teamid) {
+        return teamMapper.deleteTeam(teamid);
+    }
+
+    @Override
+    public int deleteUser_Team(int teamid) {
+        return teamMapper.deleteUser_Team(teamid);
+    }
+
+
 }

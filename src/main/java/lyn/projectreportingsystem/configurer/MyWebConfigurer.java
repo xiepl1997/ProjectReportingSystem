@@ -19,6 +19,9 @@ public class MyWebConfigurer implements WebMvcConfigurer {
         registry.addViewController("/members.html").setViewName("members");
         registry.addViewController("/projectform.html").setViewName("projectform");
         registry.addViewController("/newteam.html").setViewName("newteam");
+        registry.addViewController("/myteam.html").setViewName("myteam");
+        registry.addViewController("/projectlist.html").setViewName("projectlist");
+        registry.addViewController("/creatproject.html").setViewName("creatproject");
     }
 
     /**

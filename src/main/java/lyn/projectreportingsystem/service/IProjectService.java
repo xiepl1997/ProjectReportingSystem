@@ -1,6 +1,17 @@
 package lyn.projectreportingsystem.service;
 
+import lyn.projectreportingsystem.pojo.Project;
+
+import java.util.List;
+
 public interface IProjectService {
 
     int getProjectCountByTeamid(int teamid);
+
+    List<Project> getProjectByTeamidandEmail(int teamid, String email);
+
+    List<Project> getProjectByEmail(String email);
+
+    List<Project> getProjectBytype(String type, String email);
+
 }

@@ -7,21 +7,31 @@ public class Project {
     private String starttime;
     private String endtime;
     private float money;
+    private String type;
     private String tertiarydiscipline;
     private String projectremark;
     private String settime;
     private String file;
 
-    public Project(int projectid, String projectname, String starttime, String endtime, float money, String tertiarydiscipline, String projectremark, String settime, String file) {
+    public Project(int projectid, String projectname, String starttime, String endtime, float money, String type,String tertiarydiscipline, String projectremark, String settime, String file) {
         this.projectid = projectid;
         this.projectname = projectname;
         this.starttime = starttime;
         this.endtime = endtime;
         this.money = money;
+        this.type = type;
         this.tertiarydiscipline = tertiarydiscipline;
         this.projectremark = projectremark;
         this.settime = settime;
         this.file = file;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public int getProjectid() {

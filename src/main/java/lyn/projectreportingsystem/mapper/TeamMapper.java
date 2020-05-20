@@ -51,4 +51,17 @@ public interface TeamMapper {
     @Options(useGeneratedKeys = true, keyProperty = "teamid", keyColumn = "teamid")
     void insertteam(Team team);
 
+    /**
+     * 获取用户所管理的团队
+     * @param email
+     * @return
+     */
+    @Select("select t.* from user u, team t, user_team ut where u.email = #{email} and u.email=ut.email and t.teamid=ut.teamid and ut.islead=1")
+    List<Team> selectteamofleader(@Param("email")String email);
+
+    @Delete("delete from team where teamid = #{teamid}")
+    int deleteTeam(@Param("teamid") int teamid);
+
+    @Delete("delete from user_team where teamid = #{teamid}")
+    int deleteUser_Team(@Param("teamid") int teamid);
 }
