@@ -64,4 +64,14 @@ public interface TeamMapper {
 
     @Delete("delete from user_team where teamid = #{teamid}")
     int deleteUser_Team(@Param("teamid") int teamid);
+
+    /**
+     * 插入team_project表
+     * @param teamid
+     * @param projectid
+     * @param email
+     * @return
+     */
+    @Insert("insert into team_project(teamid, projectid, email) values(#{teamid}, #{projectid}, #{email})")
+    boolean insert_team_project(@Param("teamid") int teamid, @Param("projectid") int projectid, @Param("email") String email);
 }

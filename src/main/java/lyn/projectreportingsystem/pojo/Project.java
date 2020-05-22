@@ -26,6 +26,13 @@ public class Project {
         this.file = file;
     }
 
+    public Project(String projectname, String type, String projectremark){
+        this.projectname = projectname;
+        this.type = type;
+        this.projectremark = projectremark;
+        this.money = 0;
+    }
+
     public String getType() {
         return type;
     }

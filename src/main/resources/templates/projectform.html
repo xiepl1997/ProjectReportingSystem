@@ -151,21 +151,20 @@
                                 <form action="#" method="post" enctype="multipart/form-data" class="form-horizontal">
                                     <div class="row form-group">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">项目名称</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" id="text-input" name="text-input" class="form-control"><small class="form-text text-muted">请输入项目名称</small></div>
+                                        <div class="col-12 col-md-9"><input type="text" id="text-input" name="text-input" class="form-control" th:value="${project?.projectname}"><small class="form-text text-muted">请输入项目名称</small></div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-3"><label for="starttime" class=" form-control-label">开始时间</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" id="starttime" name="starttime" class="form-control" value="" ><small class="form-text text-muted">请选择开始时间</small></div>
+                                        <div class="col-12 col-md-9"><input type="text" id="starttime" name="starttime" class="form-control" th:value="${project?.starttime}"><small class="form-text text-muted">请选择开始时间</small></div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-3"><label for="endtime" class=" form-control-label">结束时间</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" id="endtime" name="endtime" class="form-control" value="" ><small class="form-text text-muted">请选择结束时间</small></div>
+                                        <div class="col-12 col-md-9"><input type="text" id="endtime" name="endtime" class="form-control" th:value="${project?.endtime}" ><small class="form-text text-muted">请选择结束时间</small></div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-3"><label for="projecttype" class=" form-control-label">项目类别</label></div>
                                         <div class="col-12 col-md-9">
-                                            <select name="select" id="projecttype" class="form-control">
-                                                <option value="0">请选择</option>
+                                            <select name="select" id="projecttype" class="form-control" th:value="${project?.type}">
                                                 <option value="1">横向项目</option>
                                                 <option value="2">纵向项目</option>
                                             </select>
@@ -173,25 +172,22 @@
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-3"><label for="money" class=" form-control-label">申请经费</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" id="money" name="text-input" class="form-control"><small class="form-text text-muted">金额单位为万</small></div>
+                                        <div class="col-12 col-md-9"><input type="text" id="money" name="text-input" class="form-control" th:value="${project?.money}"><small class="form-text text-muted">金额单位为万</small></div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-3"><label for="tertiarydiscipline" class=" form-control-label">三级学科</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" id="tertiarydiscipline" name="text-input" class="form-control"><small class="form-text text-muted">请输入三级学科</small></div>
+                                        <div class="col-12 col-md-9"><input type="text" id="tertiarydiscipline" name="text-input" class="form-control" th:value="${project?.tertiarydiscipline}"><small class="form-text text-muted">请输入三级学科</small></div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-3"><label for="textarea-input" class=" form-control-label">备注</label></div>
-                                        <div class="col-12 col-md-9"><textarea name="textarea-input" id="textarea-input" rows="9" placeholder="Content..." class="form-control"></textarea></div>
+                                        <div class="col-12 col-md-9"><textarea name="textarea-input" id="textarea-input" rows="9" class="form-control" ></textarea></div>
                                     </div>
 
                                 </form>
                             </div>
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-primary btn-sm">
-                                    <i class="fa fa-dot-circle-o"></i> Submit
-                                </button>
-                                <button type="reset" class="btn btn-danger btn-sm">
-                                    <i class="fa fa-ban"></i> Reset
+                                    <i class="fa fa-dot-circle-o"></i> 提交
                                 </button>
                             </div>
                         </div>
@@ -216,10 +212,7 @@
                             </div>
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-primary btn-sm">
-                                    <i class="fa fa-dot-circle-o"></i> Submit
-                                </button>
-                                <button type="reset" class="btn btn-danger btn-sm">
-                                    <i class="fa fa-ban"></i> Reset
+                                    <i class="fa fa-dot-circle-o"></i> 提交
                                 </button>
                             </div>
                         </div>
@@ -265,7 +258,8 @@
         autoclose: true,//选中自动关闭
         todayBtn: true//显示今日按钮
     });
-    $('#starttime').datetimepicker("setDate", new Date());
+    // $('#starttime').datetimepicker("setDate", new Date());
+    $('#starttime').datetimepicker("setDate", [[${project?.starttime}]]);
 
     $('#endtime').datetimepicker({
         format: 'yyyy-mm-dd',
@@ -276,6 +270,12 @@
         autoclose: true,//选中自动关闭
         todayBtn: true//显示今日按钮
     });
-    $('#endtime').datetimepicker("setDate", new Date());
+    // $('#endtime').datetimepicker("setDate", new Date());
+    $('#endtime').datetimepicker("setDate", [[${project?.endtime}]]);
+
+    $(document).ready(function () {
+
+        $('#textarea-input').html("hhhhha;skdf");
+    })
 </script>
 </html>

@@ -22,4 +22,6 @@ public interface ITeamService {
     int deleteTeam(int teamid);
 
     int deleteUser_Team(int teamid);
+
+    boolean insert_team_project(int teamid, int projectid, String email);
 }

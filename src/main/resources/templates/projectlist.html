@@ -181,7 +181,7 @@
                                             <td th:text="${project?.projectname}"></td>
                                             <td th:text="${project?.starttime}+' ~ '+${project?.endtime}"></td>
                                             <td th:text="${project?.tertiarydiscipline}"></td>
-                                            <td><button type="button" class="btn btn-default btn-info delmember write">填报</button></td>
+                                            <td><a th:href="'/writeproject?projectid='+${project?.projectid}"><button type="button" class="btn btn-default btn-info delmember write">填报</button></a></td>
                                         </tr>
                                     </span>
 

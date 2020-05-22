@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -306,9 +307,57 @@ public class MainController {
         return "redirect:/creatproject.html";
     }
 
+    /**
+     * 在创建项目页面切换团队时，团队成员列表更新
+     * @param request
+     * @return
+     */
     @RequestMapping("/creatprojectgetuser")
     @ResponseBody
     public List<User> creatprojectgetuser(HttpServletRequest request){
+        String teamid = request.getParameter("teamid");
+
+        List<User> userlist = userService.getMembersInSameTeamByTeamID(Integer.parseInt(teamid));
+        return userlist;
+    }
+
+    /**
+     * 创建新项目
+     * @param request
+     */
+    @RequestMapping("/newprojectcreat")
+    @ResponseBody
+    public String newprojectcreat(HttpServletRequest request){
+        String projectname = request.getParameter("projectname");
+        String projectremark = request.getParameter("remark");
+        String teamid = request.getParameter("teamid");
+        String type = request.getParameter("type");
+        String[] userids = request.getParameter("userids").split("-");
+
+        HttpSession session = request.getSession();
+        Object user = session.getAttribute("user");
+
+        Project project = new Project(projectname, type,projectremark);
+        try{
+            projectService.insertproject(project);
+            teamService.insert_team_project(Integer.parseInt(teamid), project.getProjectid(), ((User)user).getEmail());
+            for(int i = 0; i < userids.length; i++){
+                teamService.insert_team_project(Integer.parseInt(teamid), project.getProjectid(),userids[i]);
+            }
+        }catch (Exception e){
+            return "error";
+        }
+        return "success";
+    }
+
+    @RequestMapping("/writeproject")
+    public String gotoprojectform(@RequestParam("projectid") Integer projectid,
+                                  RedirectAttributes redirectAttributes){
+
+        Project project = projectService.getprojectbyprojectid(projectid);
+        redirectAttributes.addFlashAttribute(project);
+
+        return "redirect:/projectform.html";
 
     }
 

@@ -34,4 +34,14 @@ public class ProjectService implements IProjectService {
         return projectMapper.getProjectBytype(type, email);
     }
 
+    @Override
+    public boolean insertproject(Project project) {
+        return projectMapper.insertproject(project);
+    }
+
+    @Override
+    public Project getprojectbyprojectid(int projectid) {
+        return projectMapper.getprojectbyprojectid(projectid);
+    }
+
 }

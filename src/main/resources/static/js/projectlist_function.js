@@ -27,4 +27,8 @@ $(document).ready(function () {
             }
         })
     })
+
+    // $(document).on('click', '.projecttable button', function () {
+    //     var projectid = $(this).attr('id');
+    // })
 })

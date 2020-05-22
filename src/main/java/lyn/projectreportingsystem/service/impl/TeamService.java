@@ -55,5 +55,10 @@ public class TeamService implements ITeamService {
         return teamMapper.deleteUser_Team(teamid);
     }
 
+    @Override
+    public boolean insert_team_project(int teamid, int projectid, String email) {
+        return teamMapper.insert_team_project(teamid, projectid, email);
+    }
+
 
 }

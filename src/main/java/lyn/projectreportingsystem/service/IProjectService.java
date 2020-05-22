@@ -14,4 +14,8 @@ public interface IProjectService {
 
     List<Project> getProjectBytype(String type, String email);
 
+    boolean insertproject(Project project);
+
+    Project getprojectbyprojectid(int projectid);
+
 }

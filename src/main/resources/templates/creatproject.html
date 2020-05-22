@@ -154,21 +154,21 @@
                                         <div class="col-12 col-md-9" id="teamname">
                                             <select name="select" class="form-control">
                                                 <span th:each="team:${teamlist}">
-                                                    <option th:text="${team?.teamid}+'-'+${team?.teamname}"></option>
+                                                    <option th:value="${team?.teamid}" th:text="${team?.teamid}+'-'+${team?.teamname}"></option>
                                                 </span>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">项目名称</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" id="text-input" name="teamname" class="form-control"><small class="form-text text-muted">请输入团队名称</small></div>
+                                        <div class="col-12 col-md-9"><input type="text" id="text-input" name="teamname" class="form-control"><small class="form-text text-muted">请输入项目名称</small></div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-3"><label for="projecttype" class=" form-control-label">项目类别</label></div>
                                         <div class="col-12 col-md-9">
                                             <select name="select" id="projecttype" class="form-control">
-                                                <option value="1">横向项目</option>
-                                                <option value="2">纵向项目</option>
+                                                <option value="横向项目">横向项目</option>
+                                                <option value="纵向项目">纵向项目</option>
                                             </select>
                                         </div>
                                     </div>
