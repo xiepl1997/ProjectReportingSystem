@@ -1,14 +1,17 @@
 package lyn.projectreportingsystem.controller;
 
+import lyn.projectreportingsystem.pojo.Block;
 import lyn.projectreportingsystem.pojo.Project;
 import lyn.projectreportingsystem.pojo.Team;
 import lyn.projectreportingsystem.pojo.User;
+import lyn.projectreportingsystem.service.impl.BlockService;
 import lyn.projectreportingsystem.service.impl.ProjectService;
 import lyn.projectreportingsystem.service.impl.TeamService;
 import lyn.projectreportingsystem.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -33,6 +36,9 @@ public class MainController {
 
     @Autowired
     private ProjectService projectService = null;
+
+    @Autowired
+    private BlockService blockService = null;
 
     @RequestMapping("/index")
     public ModelAndView mainPage(HttpServletRequest request){
@@ -338,18 +344,31 @@ public class MainController {
         Object user = session.getAttribute("user");
 
         Project project = new Project(projectname, type,projectremark);
+
         try{
             projectService.insertproject(project);
             teamService.insert_team_project(Integer.parseInt(teamid), project.getProjectid(), ((User)user).getEmail());
             for(int i = 0; i < userids.length; i++){
                 teamService.insert_team_project(Integer.parseInt(teamid), project.getProjectid(),userids[i]);
             }
+            //得到block
+            Block block = new Block(((User)user).getEmail(),String.valueOf(project.getProjectid()),projectname,null,null,0,type,
+                    "",projectremark,"0");
+            block.mineBlock(2);
+            blockService.insertblock(block);
+
         }catch (Exception e){
             return "error";
         }
         return "success";
     }
 
+    /**
+     * 跳转到填报模块
+     * @param projectid
+     * @param redirectAttributes
+     * @return
+     */
     @RequestMapping("/writeproject")
     public String gotoprojectform(@RequestParam("projectid") Integer projectid,
                                   RedirectAttributes redirectAttributes){
@@ -358,6 +377,58 @@ public class MainController {
         redirectAttributes.addFlashAttribute(project);
 
         return "redirect:/projectform.html";
+
+    }
+
+    /**
+     * 通过type来获取项目
+     * @param request
+     * @return
+     */
+    @RequestMapping("/getprojectbytepe")
+    @ResponseBody
+    public List<Project> getprojectbytype(HttpServletRequest request){
+        String type = request.getParameter("projecttype");
+
+        HttpSession session = request.getSession();
+        Object user = session.getAttribute("user");
+
+        List<Project> projectList = projectService.getProjectBytype(type, ((User)user).getEmail());
+        return projectList;
+    }
+
+    /**
+     * 填报项目提交
+     * @param request
+     */
+    @RequestMapping("/submitproject")
+    @ResponseBody
+    public String submitproject(HttpServletRequest request){
+        String projectid = request.getParameter("projectid");
+        String projectname = request.getParameter("projectname");
+        String starttime = request.getParameter("starttime");
+        String endtime = request.getParameter("endtime");
+        String type = request.getParameter("type");
+        String money = request.getParameter("money");
+        String tertiarydiscipline = request.getParameter("tertiarydiscipline");
+        String projectremark = request.getParameter("projectremark");
+
+        HttpSession session = request.getSession();
+        Object user = session.getAttribute("user");
+
+        try{
+            projectService.updatesubmitproject(Integer.parseInt(projectid),
+                    projectname,starttime,endtime,Float.parseFloat(money),type,tertiarydiscipline,projectremark);
+            List<Block> blockList = blockService.getblockbyprojectid(projectid);
+            String previous_hash = blockList.get(0).getHash();
+            Block block = new Block(((User)user).getEmail(),projectid,projectname,starttime,endtime,Float.parseFloat(money),type,tertiarydiscipline,projectremark,previous_hash);
+            block.mineBlock(2);
+            blockService.insertblock(block);
+        }catch (Exception e){
+            return "error";
+        }
+        return "success";
+
 
     }
 

@@ -18,4 +18,13 @@ public interface IProjectService {
 
     Project getprojectbyprojectid(int projectid);
 
+    boolean updatesubmitproject(int projectid,
+                                String projectname,
+                                String starttime,
+                                String endtime,
+                                float money,
+                                String type,
+                                String tertiarydiscipline,
+                                String projectremark);
+
 }

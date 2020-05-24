@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="assets/css/cs-skin-elastic.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="css/bootstrap-datetimepicker.css">
+    <link rel="stylesheet" href="css/projectformCSS.css">
 
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
 
@@ -150,6 +151,10 @@
                             <div class="card-body card-block">
                                 <form action="#" method="post" enctype="multipart/form-data" class="form-horizontal">
                                     <div class="row form-group">
+                                        <div class="col col-md-3"><label for="projectid" class=" form-control-label">项目编号</label></div>
+                                        <div class="col-12 col-md-9"><input type="text" id="projectid" name="projectid" class="form-control" th:value="${project?.projectid}" readonly="readonly"><small class="form-text text-muted">请输入项目名称</small></div>
+                                    </div>
+                                    <div class="row form-group">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">项目名称</label></div>
                                         <div class="col-12 col-md-9"><input type="text" id="text-input" name="text-input" class="form-control" th:value="${project?.projectname}"><small class="form-text text-muted">请输入项目名称</small></div>
                                     </div>
@@ -159,14 +164,14 @@
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-3"><label for="endtime" class=" form-control-label">结束时间</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" id="endtime" name="endtime" class="form-control" th:value="${project?.endtime}" ><small class="form-text text-muted">请选择结束时间</small></div>
+                                        <div class="col-12 col-md-9"><input type="text" id="endtime" name="endtime" class="form-control" th:value="${project?.endtime}"><small class="form-text text-muted">请选择结束时间</small></div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-3"><label for="projecttype" class=" form-control-label">项目类别</label></div>
                                         <div class="col-12 col-md-9">
-                                            <select name="select" id="projecttype" class="form-control" th:value="${project?.type}">
-                                                <option value="1">横向项目</option>
-                                                <option value="2">纵向项目</option>
+                                            <select name="select" id="projecttype" class="form-control" >
+                                                <option value="横向项目" class="typeoption1">横向项目</option>
+                                                <option value="纵向项目" class="typeoption2">纵向项目</option>
                                             </select>
                                         </div>
                                     </div>
@@ -180,13 +185,13 @@
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-3"><label for="textarea-input" class=" form-control-label">备注</label></div>
-                                        <div class="col-12 col-md-9"><textarea name="textarea-input" id="textarea-input" rows="9" class="form-control" ></textarea></div>
+                                        <div class="col-12 col-md-9"><textarea name="textarea-input" id="textarea-input" rows="9" class="form-control" th:text="${project?.projectremark}"></textarea></div>
                                     </div>
 
                                 </form>
                             </div>
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary btn-sm">
+                                <button id="writeproject" class="btn btn-primary btn-sm">
                                     <i class="fa fa-dot-circle-o"></i> 提交
                                 </button>
                             </div>
@@ -236,46 +241,53 @@
 <!-- Right Panel -->
 
 <!-- Scripts -->
+    <script>
+        var type = [[${project?.type}]];
+        if(type == '横向项目')
+            $('.typeoption1').attr('selected','true');
+        else
+            $('.typeoption2').attr('selected','true');
+    </script>
 <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
 <script src="assets/js/main.js"></script>
 <script src="js/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="js/JQuery/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="js/projectform_function.js"></script>
     <script src="js/bootstrap-datetimepicker.js"></script>
-<script src="js/bootstrap-datetimepicker.zh-CN.js"></script>
+    <script src="js/bootstrap-datetimepicker.zh-CN.js"></script>
 
+    <script>
 
+        // var st = [[${project.starttime}]] == '' ? new Date() : [[${project.starttime}]];
+        // var et = [[${project.endtime}]] == '' ? new Date() : [[${project.endtime}]];
+        // var st = new Date();
+        // var et = new Date();
+        $('#starttime').datetimepicker({
+            format: 'yyyy-mm-dd',
+            language: 'zh-CN',
+            forceParse: 0,
+            minView: "day",
+            initialDate: new Date(),//初始化当前日期
+            autoclose: true,//选中自动关闭
+            todayBtn: true,//显示今日按钮
+        });
+        //$('#starttime').datetimepicker("setDate", [[${project.starttime}]]);
+
+        $('#endtime').datetimepicker({
+            format: 'yyyy-mm-dd',
+            language: 'zh-CN',
+            forceParse: 0,
+            minView: "day",
+            initialDate: new Date(),//初始化当前日期
+            autoclose: true,//选中自动关闭
+            todayBtn: true,//显示今日按钮
+        });
+        //$('#endtime').datetimepicker("setDate", [[${project.endtime}]]);
+
+    </script>
 
 </body>
-<script>
-    $('#starttime').datetimepicker({
-        format: 'yyyy-mm-dd',
-        language: 'zh-CN',
-        forceParse: 0,
-        minView: "day",
-        initialDate: new Date(),//初始化当前日期
-        autoclose: true,//选中自动关闭
-        todayBtn: true//显示今日按钮
-    });
-    // $('#starttime').datetimepicker("setDate", new Date());
-    $('#starttime').datetimepicker("setDate", [[${project?.starttime}]]);
-
-    $('#endtime').datetimepicker({
-        format: 'yyyy-mm-dd',
-        language: 'zh-CN',
-        forceParse: 0,
-        minView: "day",
-        initialDate: new Date(),//初始化当前日期
-        autoclose: true,//选中自动关闭
-        todayBtn: true//显示今日按钮
-    });
-    // $('#endtime').datetimepicker("setDate", new Date());
-    $('#endtime').datetimepicker("setDate", [[${project?.endtime}]]);
-
-    $(document).ready(function () {
-
-        $('#textarea-input').html("hhhhha;skdf");
-    })
-</script>
 </html>

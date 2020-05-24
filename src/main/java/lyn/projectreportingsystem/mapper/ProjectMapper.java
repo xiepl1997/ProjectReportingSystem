@@ -58,4 +58,14 @@ public interface ProjectMapper {
      */
     @Select("select * from project where projectid = #{projectid}")
     Project getprojectbyprojectid(@Param("projectid") int projectid);
+
+    @Update("update project set projectname=#{projectname},starttime=#{starttime},endtime=#{endtime},money=#{money},type=#{type},tertiarydiscipline=#{tertiarydiscipline},projectremark=#{projectremark} where projectid=#{projectid}")
+    boolean updatesubmitproject(@Param("projectid") int projectid,
+                                @Param("projectname") String projectname,
+                                @Param("starttime") String starttime,
+                                @Param("endtime") String endtime,
+                                @Param("money") float money,
+                                @Param("type") String type,
+                                @Param("tertiarydiscipline") String tertiarydiscipline,
+                                @Param("projectremark") String projectremark);
 }
