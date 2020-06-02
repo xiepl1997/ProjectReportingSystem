@@ -103,7 +103,7 @@
                         </a>
 
                         <div class="user-menu dropdown-menu">
-                            <a class="nav-link" href="#">修改个人信息</a>
+                            <a class="nav-link" href="/updateinfo">修改个人信息</a>
                             <a class="nav-link" href="#">退出</a>
                         </div>
                     </div>
@@ -119,7 +119,7 @@
                 <div class="col-sm-4">
                     <div class="page-header float-left">
                         <div class="page-title">
-                            <h1>项目填报</h1>
+                            <h1>时间线</h1>
                         </div>
                     </div>
                 </div>
@@ -127,8 +127,8 @@
                     <div class="page-header float-right">
                         <div class="page-title">
                             <ol class="breadcrumb text-right">
-                                <li><a href="/updateinfo">科研项目</a></li>
-                                <li class="active">项目列表</li>
+                                <li><a href="#">动态</a></li>
+                                <li class="active">时间线</li>
                             </ol>
                         </div>
                     </div>
@@ -181,18 +181,18 @@
                                     <th>项目编号</th>
                                     <th>项目名称</th>
                                     <th>时间</th>
-                                    <th>级别</th>
+                                    <th>二级学科</th>
                                     <th>操作</th>
                                 </tr>
                                 </thead>
                                 <tbody class="projecttable">
-                                    <span th:each="project:${projectlist}">
+                                <span th:each="project:${projectlist}">
                                         <tr>
                                             <td id="projectid" th:text="${project?.projectid}"></td>
                                             <td th:text="${project?.projectname}"></td>
                                             <td th:text="${project?.starttime}+' ~ '+${project?.endtime}"></td>
                                             <td th:text="${project?.tertiarydiscipline}"></td>
-                                            <td><a th:href="'/writeproject?projectid='+${project?.projectid}"><button type="button" class="btn btn-default btn-info delmember write">填报</button></a></td>
+                                            <td><a th:href="'/checkprojectcache?projectid='+${project?.projectid}"><button type="button" class="btn btn-default btn-info delmember write">查看填报记录</button></a></td>
                                         </tr>
                                     </span>
 
@@ -227,7 +227,7 @@
 <script src="js/bootstrap-datetimepicker.js"></script>
 <script src="js/bootstrap-datetimepicker.zh-CN.js"></script>
 <script type="text/javascript" src="js/JQuery/jquery-3.4.1.min.js"></script>
-<script type="text/javascript" src="js/projectlist_function.js"></script>
+<script type="text/javascript" src="js/projectcache_function.js"></script>
 
 
 

@@ -28,4 +28,9 @@ public class BlockService implements IBlockService {
     public boolean insertblock(Block block) {
         return blockMapper.insertblock(block);
     }
+
+    @Override
+    public Block getlasterblock(String projectid) {
+        return blockMapper.getlasterblock(projectid);
+    }
 }

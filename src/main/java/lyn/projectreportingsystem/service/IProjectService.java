@@ -27,4 +27,6 @@ public interface IProjectService {
                                 String tertiarydiscipline,
                                 String projectremark);
 
+    boolean updatefile(int projectid, String filepath);
+
 }

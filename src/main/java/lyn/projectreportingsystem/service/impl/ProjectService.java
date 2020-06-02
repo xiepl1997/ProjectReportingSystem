@@ -49,4 +49,9 @@ public class ProjectService implements IProjectService {
         return projectMapper.updatesubmitproject(projectid,projectname,starttime,endtime,money,type,tertiarydiscipline,projectremark);
     }
 
+    @Override
+    public boolean updatefile(int projectid, String filepath) {
+        return projectMapper.updatefile(projectid, filepath);
+    }
+
 }

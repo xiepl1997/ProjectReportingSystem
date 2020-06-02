@@ -18,11 +18,12 @@ public class Block {
     private String type;
     private String tertiarydiscipline;
     private String projectremark;
+    private String file;
     public String previous_hash;
     public String hash;
     private int nonce;
 
-    public Block(String email, String projectid, long timestamp, String projectname, String starttime, String endtime, float money, String type, String tertiarydiscipline, String projectremark, String previous_hash, String hash, int nonce) {
+    public Block(String email, String projectid, long timestamp, String projectname, String starttime, String endtime, float money, String type, String tertiarydiscipline, String projectremark, String file, String previous_hash, String hash, int nonce) {
         this.email = email;
         this.projectid = projectid;
         this.timestamp = new Date().getTime();
@@ -33,12 +34,13 @@ public class Block {
         this.type = type;
         this.tertiarydiscipline = tertiarydiscipline;
         this.projectremark = projectremark;
+        this.file = file;
         this.previous_hash = previous_hash;
         this.hash = hash;
         this.nonce = 0;
     }
 
-    public Block(String email, String projectid, String projectname, String starttime, String endtime, float money, String type, String tertiarydiscipline, String projectremark, String previous_hash) {
+    public Block(String email, String projectid, String projectname, String starttime, String endtime, float money, String type, String tertiarydiscipline, String projectremark, String file,String previous_hash) {
         this.email = email;
         this.projectid = projectid;
         this.timestamp = new Date().getTime();
@@ -49,6 +51,7 @@ public class Block {
         this.type = type;
         this.tertiarydiscipline = tertiarydiscipline;
         this.projectremark = projectremark;
+        this.file = file;
         this.previous_hash = previous_hash;
         this.nonce = 0;
         this.hash = calculateHash();
@@ -71,6 +74,7 @@ public class Block {
                         type+
                         tertiarydiscipline+
                         projectremark+
+                        file+
                         String.valueOf(nonce)
         );
         return calculatedhash;
@@ -81,12 +85,21 @@ public class Block {
      * @param difficulty
      */
     public void mineBlock(int difficulty) {
+        nonce = 0;
         String target = new String(new char[difficulty]).replace('\0', '0');
         while(!hash.substring( 0, difficulty).equals(target)) {
             nonce ++;
             hash = calculateHash();
         }
         System.out.println("Block Mined!!! : " + hash);
+    }
+
+    public String getFile() {
+        return file;
+    }
+
+    public void setFile(String file) {
+        this.file = file;
     }
 
     public String getEmail() {
@@ -192,4 +205,5 @@ public class Block {
     public void setNonce(int nonce) {
         this.nonce = nonce;
     }
+
 }

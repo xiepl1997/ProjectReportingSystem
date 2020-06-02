@@ -7,6 +7,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="multipart/form-data; charset=utf-8" />
     <title>基于区块链的团队科研共享填报系统</title>
     <meta name="description" content="Ela Admin - HTML5 Admin Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -63,7 +64,7 @@
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-th"></i>动态</a>
                         <ul class="sub-menu children dropdown-menu">
-                            <li><i class="menu-icon fa fa-th"></i><a href="projectform.html">时间线</a></li>
+                            <li><i class="menu-icon fa fa-th"></i><a href="/projectcache">填报记录</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -103,7 +104,7 @@
                             </a>
 
                             <div class="user-menu dropdown-menu">
-                                <a class="nav-link" href="#">修改个人信息</a>
+                                <a class="nav-link" href="/updateinfo">修改个人信息</a>
                                 <a class="nav-link" href="#">退出</a>
                             </div>
                         </div>
@@ -170,8 +171,8 @@
                                         <div class="col col-md-3"><label for="projecttype" class=" form-control-label">项目类别</label></div>
                                         <div class="col-12 col-md-9">
                                             <select name="select" id="projecttype" class="form-control" >
-                                                <option value="横向项目" class="typeoption1">横向项目</option>
-                                                <option value="纵向项目" class="typeoption2">纵向项目</option>
+                                                <option value="横向项目" th:selected="${project.type} eq '横向项目'">横向项目</option>
+                                                <option value="纵向项目" th:selected="${project.type} eq '纵向项目'">纵向项目</option>
                                             </select>
                                         </div>
                                     </div>
@@ -180,8 +181,17 @@
                                         <div class="col-12 col-md-9"><input type="text" id="money" name="text-input" class="form-control" th:value="${project?.money}"><small class="form-text text-muted">金额单位为万</small></div>
                                     </div>
                                     <div class="row form-group">
-                                        <div class="col col-md-3"><label for="tertiarydiscipline" class=" form-control-label">三级学科</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" id="tertiarydiscipline" name="text-input" class="form-control" th:value="${project?.tertiarydiscipline}"><small class="form-text text-muted">请输入三级学科</small></div>
+<!--                                        <div class="col col-md-3"><label for="tertiarydiscipline" class=" form-control-label">三级学科</label></div>-->
+<!--                                        <div class="col-12 col-md-9"><input type="text" id="tertiarydiscipline" name="text-input" class="form-control" th:value="${project?.tertiarydiscipline}"><small class="form-text text-muted">请输入三级学科</small></div>-->
+                                        <div class="col col-md-3"><label for="projecttype" class=" form-control-label">级别</label></div>
+                                        <div class="col-12 col-md-9">
+                                            <select name="select" id="tertiarydiscipline" class="form-control" >
+                                                <option value="国家级" th:selected="${project.tertiarydiscipline} eq '国家级'">国家级</option>
+                                                <option value="省级" th:selected="${project.tertiarydiscipline} eq '省级'">省级</option>
+                                                <option value="市级" th:selected="${project.tertiarydiscipline} eq '市级'">市级</option>
+                                                <option value="校级" th:selected="${project.tertiarydiscipline} eq '校级'">校级</option>
+                                            </select>
+                                        </div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-3"><label for="textarea-input" class=" form-control-label">备注</label></div>
@@ -204,19 +214,15 @@
                                 文件上传
                             </div>
                             <div class="card-body card-block">
-                                <form action="#" method="post" class="form-horizontal">
+                                <form th:action="'/upload?projectid='+${project.projectid}" method="post" class="form-horizontal" id="fileform" enctype="multipart/form-data">
                                     <div class="row form-group">
-                                        <div class="col col-md-3"><label for="file-input" class=" form-control-label">项目申报书上传</label></div>
-                                        <div class="col-12 col-md-9"><input type="file" id="file-input" name="file-input" class="form-control-file"></div>
-                                    </div>
-                                    <div class="row form-group">
-                                        <div class="col col-md-3"><label for="file-multiple-input" class=" form-control-label">项目资料上传</label></div>
-                                        <div class="col-12 col-md-9"><input type="file" id="file-multiple-input" name="file-multiple-input" multiple="" class="form-control-file"></div>
+                                        <div class="col col-md-3"><label for="file-multiple-input" class=" form-control-label">项目申报书上传</label></div>
+                                        <div class="col-12 col-md-9"><input type="file" id="file-multiple-input" name="file-multiple" multiple="multiple" class="form-control-file" required="required"></div>
                                     </div>
                                 </form>
                             </div>
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary btn-sm">
+                                <button class="btn btn-primary btn-sm" id="fileupload" onclick="tijiao()">
                                     <i class="fa fa-dot-circle-o"></i> 提交
                                 </button>
                             </div>
@@ -241,19 +247,13 @@
 <!-- Right Panel -->
 
 <!-- Scripts -->
-    <script>
-        var type = [[${project?.type}]];
-        if(type == '横向项目')
-            $('.typeoption1').attr('selected','true');
-        else
-            $('.typeoption2').attr('selected','true');
-    </script>
 <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
 <script src="assets/js/main.js"></script>
 <script src="js/jquery-1.8.3.min.js"></script>
+    <script src="js/JQuery/jquery.form.js"></script>
     <script type="text/javascript" src="js/JQuery/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="js/projectform_function.js"></script>
     <script src="js/bootstrap-datetimepicker.js"></script>

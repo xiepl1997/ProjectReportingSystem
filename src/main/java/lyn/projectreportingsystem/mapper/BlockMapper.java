@@ -18,7 +18,7 @@ public interface BlockMapper {
      * @param projectid
      * @return
      */
-    @Select("select * from block where projectid = #{projectid} order by timestamp desc")
+    @Select("select * from block where projectid = #{projectid} order by timestamp")
     List<Block> getblockbyprojectid(@Param("projectid") String projectid);
 
     /**
@@ -34,6 +34,15 @@ public interface BlockMapper {
      * @param block
      * @return
      */
-    @Insert("insert into block(email,projectid,timestamp,projectname,starttime,endtime,money,type,tertiarydiscipline,projectremark,previous_hash,hash,nonce) values(#{email},#{projectid},#{timestamp},#{projectname},#{starttime},#{endtime},#{money},#{type},#{tertiarydiscipline},#{projectremark},#{previous_hash},#{hash},#{nonce})")
+    @Insert("insert into block(email,projectid,timestamp,projectname,starttime,endtime,money,type,tertiarydiscipline,projectremark,file,previous_hash,hash,nonce) values(#{email},#{projectid},#{timestamp},#{projectname},#{starttime},#{endtime},#{money},#{type},#{tertiarydiscipline},#{projectremark},#{file},#{previous_hash},#{hash},#{nonce})")
     boolean insertblock(Block block);
+
+    /**
+     * 获取项目最新的提交
+     * @param projectid
+     * @return
+     */
+    @Select("select * from block where projectid = #{projectid} order by timestamp desc limit 1")
+    Block getlasterblock(@Param("projectid") String projectid);
+
 }

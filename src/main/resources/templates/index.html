@@ -97,7 +97,7 @@
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-th"></i>动态</a>
                         <ul class="sub-menu children dropdown-menu">
-                            <li><i class="menu-icon fa fa-th"></i><a href="projectform.html">时间线</a></li>
+                            <li><i class="menu-icon fa fa-th"></i><a href="/projectcache">填报记录</a></li>
                         </ul>
                     </li>
 
@@ -134,7 +134,7 @@
                         </a>
 
                         <div class="user-menu dropdown-menu">
-                            <a class="nav-link" href="#">修改个人信息</a>
+                            <a class="nav-link" href="/updateinfo">修改个人信息</a>
                             <a class="nav-link" href="#">退出</a>
                         </div>
                     </div>
@@ -468,13 +468,13 @@
             },
             xAxis: {
                 type: 'category',
-                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                data: ['2014', '2015', '2016', '2017', '2018', '2019', '2020']
             },
             yAxis: {
                 type: 'value'
             },
             series: [{
-                data: [820, 932, 901, 934, 1290, 1330, 1320],
+                data: [0, 0, 0, 0, 0, 0, 3],
                 type: 'line',
                 smooth: true
             }]
@@ -516,8 +516,8 @@
                         show: false
                     },
                     data: [
-                        {value: 12, name: '横向'},
-                        {value: 5, name: '纵向'}
+                        {value: 2, name: '横向'},
+                        {value: 1, name: '纵向'}
                     ]
                 }
             ]

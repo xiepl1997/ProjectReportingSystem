@@ -1,4 +1,8 @@
 $(document).ready(function () {
+
+    /**
+     * 点击主要内容提交时触发
+     */
     $(document).on('click', '#writeproject', function () {
         var projectid = $('#projectid').val();
         var projectname = $('#text-input').val();
@@ -37,4 +41,14 @@ $(document).ready(function () {
             }
         })
     })
+
+    //文件上传form提交回调
+    $('#fileform').ajaxForm(function (message) {
+        alert(message);
+    })
 })
+
+//由于submit按钮在form外，所以调用js进行form提交
+function tijiao() {
+    $('#fileform').submit();
+}

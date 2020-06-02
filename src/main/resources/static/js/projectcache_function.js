@@ -17,7 +17,7 @@ $(document).ready(function () {
                         "        <td >"+projectlist[i].projectname+"</td>\n" +
                         "        <td >"+projectlist[i].starttime+" ~ "+projectlist[i].endtime+"</td>\n" +
                         "        <td >"+projectlist[i].tertiarydiscipline+"</td>\n" +
-                        "        <td><a href=\"/writeproject?projectid="+projectlist[i].projectid+"\"><button type=\"button\" class=\"btn btn-default btn-info delmember write\">填报</button></a></td>\n" +
+                        "        <td><a href=\"/checkprojectcache?projectid="+projectlist[i].projectid+"\"><button type=\"button\" class=\"btn btn-default btn-info delmember write\">填报</button></a></td>\n" +
                         " </tr>";
                 }
                 $('.projecttable').html(html);
@@ -50,7 +50,7 @@ $(document).ready(function () {
                         "        <td >"+projectlist[i].projectname+"</td>\n" +
                         "        <td >"+projectlist[i].starttime+" ~ "+projectlist[i].endtime+"</td>\n" +
                         "        <td >"+projectlist[i].tertiarydiscipline+"</td>\n" +
-                        "        <td><a href=\"/writeproject?projectid="+projectlist[i].projectid+"\"><button type=\"button\" class=\"btn btn-default btn-info delmember write\">填报</button></a></td>\n" +
+                        "        <td><a href=\"/checkprojectcache?projectid="+projectlist[i].projectid+"\"><button type=\"button\" class=\"btn btn-default btn-info delmember write\">填报</button></a></td>\n" +
                         " </tr>";
                 }
                 $('.projecttable').html(html);

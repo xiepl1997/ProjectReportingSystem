@@ -68,4 +68,7 @@ public interface ProjectMapper {
                                 @Param("type") String type,
                                 @Param("tertiarydiscipline") String tertiarydiscipline,
                                 @Param("projectremark") String projectremark);
+
+    @Update("update project set filepath = #{filepath} where projectid = #{projectid}")
+    boolean updatefile(@Param("projectid") int projectid, @Param("filepath") String filepath);
 }

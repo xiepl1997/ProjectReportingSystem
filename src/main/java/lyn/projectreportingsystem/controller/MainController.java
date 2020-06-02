@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
+import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.lang.reflect.Array;
@@ -353,7 +354,7 @@ public class MainController {
             }
             //得到block
             Block block = new Block(((User)user).getEmail(),String.valueOf(project.getProjectid()),projectname,null,null,0,type,
-                    "",projectremark,"0");
+                    "",projectremark,"","0");
             block.mineBlock(2);
             blockService.insertblock(block);
 
@@ -421,7 +422,7 @@ public class MainController {
                     projectname,starttime,endtime,Float.parseFloat(money),type,tertiarydiscipline,projectremark);
             List<Block> blockList = blockService.getblockbyprojectid(projectid);
             String previous_hash = blockList.get(0).getHash();
-            Block block = new Block(((User)user).getEmail(),projectid,projectname,starttime,endtime,Float.parseFloat(money),type,tertiarydiscipline,projectremark,previous_hash);
+            Block block = new Block(((User)user).getEmail(),projectid,projectname,starttime,endtime,Float.parseFloat(money),type,tertiarydiscipline,projectremark,"",previous_hash);
             block.mineBlock(2);
             blockService.insertblock(block);
         }catch (Exception e){
@@ -429,7 +430,60 @@ public class MainController {
         }
         return "success";
 
+    }
 
+    /**
+     * 跳转到项目选择时间线页面
+     * @param request
+     * @return
+     */
+    @RequestMapping("/projectcache")
+    public String getprojectcache(HttpServletRequest request,
+                                  RedirectAttributes redirectAttributes){
+        HttpSession session = request.getSession();
+        Object user = session.getAttribute("user");
+
+        //获取所加入的团队
+        List<Team> team = teamService.getTeamsByUserEmail(((User)user).getEmail());
+
+        //获取用户参与的项目
+        List<Project> projectlist = projectService.getProjectByEmail(((User)user).getEmail());
+
+        redirectAttributes.addFlashAttribute("projectlist", projectlist);
+        redirectAttributes.addFlashAttribute("teamlist", team);
+
+        return "redirect:/projectcache.html";
+    }
+
+    /**
+     * 跳转到项目提交记录页面
+     * @param projectid
+     * @param redirectAttributes
+     * @return
+     */
+    @RequestMapping("/checkprojectcache")
+    public String checkprojectcache(@RequestParam("projectid") String projectid,
+                                    RedirectAttributes redirectAttributes){
+        List<Block> blockList = blockService.getblockbyprojectid(projectid);
+        redirectAttributes.addFlashAttribute("blocklist", blockList);
+        return "redirect:/reportrecord.html";
+    }
+
+    /**
+     * 跳转到用户修改信息表
+     * @param request
+     * @param redirectAttributes
+     * @return
+     */
+    @RequestMapping("/updateinfo")
+    public String updateinfo(HttpServletRequest request,
+                             RedirectAttributes redirectAttributes){
+        HttpSession session = request.getSession();
+        Object user = session.getAttribute("user");
+
+        redirectAttributes.addFlashAttribute("user", ((User)user));
+
+        return "redirect:/userinfo.html";
     }
 
 }

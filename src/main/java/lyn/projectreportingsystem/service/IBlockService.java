@@ -11,4 +11,6 @@ public interface IBlockService {
     boolean insertfirstblock(Block block);
 
     boolean insertblock(Block block);
+
+    Block getlasterblock(String projectid);
 }
