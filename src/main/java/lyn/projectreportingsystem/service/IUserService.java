@@ -17,4 +17,11 @@ public interface IUserService {
     String selectLeader(int teamid);
 
     int deleteMember(String email, int teamid);
+
+    boolean updateuser(String email,
+                       String name,
+                       String phone,
+                       String sex,
+                       String school,
+                       String college);
 }

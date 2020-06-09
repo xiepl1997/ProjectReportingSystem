@@ -54,4 +54,9 @@ public class ProjectService implements IProjectService {
         return projectMapper.updatefile(projectid, filepath);
     }
 
+    @Override
+    public int getHorizontalproject(int teamid, String type) {
+        return projectMapper.getHorizontalproject(teamid, type);
+    }
+
 }

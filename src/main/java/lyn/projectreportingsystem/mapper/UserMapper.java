@@ -38,4 +38,22 @@ public interface UserMapper {
      */
     @Delete("delete from user_team where teamid = #{teamid} and email = #{email}")
     int deleteMember(@Param("email") String email, @Param("teamid") int teamid);
+
+    /**
+     * 更新用户信息
+     * @param email
+     * @param name
+     * @param phone
+     * @param sex
+     * @param school
+     * @param college
+     * @return
+     */
+    @Update("update user set name=#{name},phone=#{phone},sex=#{sex},school=#{school},college=#{college} where email=#{email}")
+    boolean updateuser(@Param("email")String email,
+                       @Param("name")String name,
+                       @Param("phone")String phone,
+                       @Param("sex")String sex,
+                       @Param("school")String school,
+                       @Param("college")String college);
 }

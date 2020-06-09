@@ -29,4 +29,6 @@ public interface IProjectService {
 
     boolean updatefile(int projectid, String filepath);
 
+    int getHorizontalproject(int teamid, String type);
+
 }

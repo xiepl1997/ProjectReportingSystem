@@ -81,7 +81,7 @@ public class Block {
     }
 
     /**
-     * 挖矿，工作流证明
+     * 挖矿，工作量证明
      * @param difficulty
      */
     public void mineBlock(int difficulty) {

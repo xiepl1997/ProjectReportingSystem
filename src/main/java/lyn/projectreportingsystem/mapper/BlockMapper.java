@@ -1,10 +1,7 @@
 package lyn.projectreportingsystem.mapper;
 
 import lyn.projectreportingsystem.pojo.Block;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -44,5 +41,8 @@ public interface BlockMapper {
      */
     @Select("select * from block where projectid = #{projectid} order by timestamp desc limit 1")
     Block getlasterblock(@Param("projectid") String projectid);
+
+    @Delete("delete from block where projectid = #{projectid} and timestamp > #{timestamp}")
+    boolean deleteblockbytimestamp(@Param("projectid")String projectid, @Param("timestamp")String timestamp);
 
 }

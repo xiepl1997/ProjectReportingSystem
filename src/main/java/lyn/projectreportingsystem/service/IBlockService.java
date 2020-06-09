@@ -13,4 +13,7 @@ public interface IBlockService {
     boolean insertblock(Block block);
 
     Block getlasterblock(String projectid);
+
+    boolean deleteblockbytimestamp(String projectid, String timestamp);
+
 }

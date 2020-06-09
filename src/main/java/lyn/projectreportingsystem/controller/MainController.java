@@ -54,12 +54,18 @@ public class MainController {
         Team team = null;
         int memberscount = 0;
         int projectcount = 0;
+        int hc = 0;
+        int vc = 0;
         //获取第一个团队的信息
         if(teamlist.size() != 0){
             team = teamService.getTeamByTeamid(teamlist.get(0).getTeamid());
             memberscount = teamService.getCountOfmembersByTeamid(teamlist.get(0).getTeamid());
             projectcount = projectService.getProjectCountByTeamid(teamlist.get(0).getTeamid());
+            hc = projectService.getHorizontalproject(team.getTeamid(), "横向项目");
+            vc = projectService.getHorizontalproject(team.getTeamid(), "纵向项目");
         }
+
+        //获取横向项目数
 
         ModelAndView mv = new ModelAndView();
 
@@ -68,6 +74,8 @@ public class MainController {
         mv.addObject("team", team); //第一个团队基本信息
         mv.addObject("teamlist", teamlist); //所有团队
         mv.addObject("user", user); //用户信息
+        mv.addObject("hc", hc);
+        mv.addObject("vc", vc);
         mv.setViewName("index");
 
         return mv;
@@ -108,10 +116,14 @@ public class MainController {
         Team team = teamService.getTeamByTeamid(Integer.parseInt(teamid));
         int memberscount = teamService.getCountOfmembersByTeamid(Integer.parseInt(teamid));
         int projectcount = projectService.getProjectCountByTeamid(Integer.parseInt(teamid));
+        int hc = projectService.getHorizontalproject(team.getTeamid(), "横向项目");
+        int vc = projectService.getHorizontalproject(team.getTeamid(), "纵向项目");
 
         Map<String, Object> map = new HashMap<>();
         map.put("projectcount", projectcount);
-        map.put("memberscount",memberscount);
+        map.put("memberscount", memberscount);
+        map.put("hc", hc);
+        map.put("vc", vc);
         map.put("team", team);
 
         return map;
@@ -464,7 +476,20 @@ public class MainController {
     @RequestMapping("/checkprojectcache")
     public String checkprojectcache(@RequestParam("projectid") String projectid,
                                     RedirectAttributes redirectAttributes){
+        String message = "";
         List<Block> blockList = blockService.getblockbyprojectid(projectid);
+
+        String pre = blockList.get(0).getHash();
+
+        for(int i = 1; i < blockList.size(); i++){
+            if(!blockList.get(i).getPrevious_hash().equals(pre)){
+                message = "/rollback";
+                redirectAttributes.addFlashAttribute("msg", message);
+                break;
+            }
+            pre = blockList.get(i).getHash();
+        }
+        redirectAttributes.addFlashAttribute("projectid",projectid);
         redirectAttributes.addFlashAttribute("blocklist", blockList);
         return "redirect:/reportrecord.html";
     }
@@ -481,9 +506,73 @@ public class MainController {
         HttpSession session = request.getSession();
         Object user = session.getAttribute("user");
 
-        redirectAttributes.addFlashAttribute("user", ((User)user));
+        User nowuser = userService.SelectUserByEmail(((User)user).getEmail());
+
+        redirectAttributes.addFlashAttribute("user", nowuser);
 
         return "redirect:/userinfo.html";
+    }
+
+    /**
+     * 修改个人信息
+     * @param request
+     * @return
+     */
+    @RequestMapping("/ajaxupdateuserinfo")
+    @ResponseBody
+    public String ajaxupdateuserinfo(HttpServletRequest request){
+
+        String email = request.getParameter("email");
+        String name = request.getParameter("name");
+        String phone = request.getParameter("phone");
+        String sex = request.getParameter("sex");
+        String school = request.getParameter("school");
+        String college = request.getParameter("college");
+
+        userService.updateuser(email, name,phone,sex,school,college);
+
+        return "success";
+    }
+
+    /**
+     * 提交记录rollback，去掉不合法提交
+     * @param request
+     * @return
+     */
+    @RequestMapping("/rollback")
+    public String rollback(HttpServletRequest request,
+                           @RequestParam("projectid")String projectid,
+                           RedirectAttributes redirectAttributes){
+
+        List<Block> blockList = blockService.getblockbyprojectid(projectid);
+
+        String pre = blockList.get(0).getHash();
+        int i = 1;
+        for(; i < blockList.size(); i++){
+            if(!blockList.get(i).getPrevious_hash().equals(pre)){
+                break;
+            }
+            pre = blockList.get(i).getHash();
+        }
+        while(blockList.size() > i)
+            blockList.remove(i);
+        String timestamp = String.valueOf(blockList.get(i-1).getTimestamp());
+
+        //恢复到脏数据之前的数据
+        blockService.deleteblockbytimestamp(projectid, timestamp);
+        projectService.updatesubmitproject(Integer.parseInt(projectid),
+                blockList.get(i-1).getProjectname(),
+                blockList.get(i-1).getStarttime(),
+                blockList.get(i-1).getEndtime(),
+                blockList.get(i-1).getMoney(),
+                blockList.get(i-1).getType(),
+                blockList.get(i-1).getTertiarydiscipline(),
+                blockList.get(i-1).getProjectremark());
+        projectService.updatefile(Integer.parseInt(projectid), blockList.get(i-1).getFile());
+
+        redirectAttributes.addFlashAttribute("projectid",projectid);
+        redirectAttributes.addFlashAttribute("blocklist", blockList);
+        return "redirect:/reportrecord.html";
     }
 
 }

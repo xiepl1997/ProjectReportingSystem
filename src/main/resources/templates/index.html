@@ -135,7 +135,7 @@
 
                         <div class="user-menu dropdown-menu">
                             <a class="nav-link" href="/updateinfo">修改个人信息</a>
-                            <a class="nav-link" href="#">退出</a>
+                            <a class="nav-link" href="/exit">退出</a>
                         </div>
                     </div>
 
@@ -458,6 +458,8 @@
     <script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
 
     <script>
+        var projectcount = [[${projectcount}]];
+
         //折线图
         var myChart = echarts.init(document.getElementById('flot-line'));
 
@@ -474,7 +476,7 @@
                 type: 'value'
             },
             series: [{
-                data: [0, 0, 0, 0, 0, 0, 3],
+                data: [0, 0, 0, 0, 0, 0, projectcount],
                 type: 'line',
                 smooth: true
             }]
@@ -482,6 +484,8 @@
 
         // 使用刚指定的配置项和数据显示图表。
         myChart.setOption(option);
+        var hc = [[${hc}]];
+        var vc = [[${vc}]];
 
         //饼图
         var pie = echarts.init(document.getElementById('pie-chart'));
@@ -516,8 +520,8 @@
                         show: false
                     },
                     data: [
-                        {value: 2, name: '横向'},
-                        {value: 1, name: '纵向'}
+                        {value: hc, name: '横向'},
+                        {value: vc, name: '纵向'}
                     ]
                 }
             ]

@@ -104,7 +104,7 @@
 
                         <div class="user-menu dropdown-menu">
                             <a class="nav-link" href="/updateinfo">修改个人信息</a>
-                            <a class="nav-link" href="#">退出</a>
+                            <a class="nav-link" href="/exit">退出</a>
                         </div>
                     </div>
                 </div>
@@ -142,6 +142,8 @@
             <div class="row">
 
                 <div class="col-md-12">
+<!--                    <p style="font-size: large; float: top;text-align: center;font-family: 等线;background-color: pink;border-radius: 5px;" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"><a id="rollback" th:href="/rollback" th:if="${not #strings.isEmpty(msg)}">恢复</a></p>-->
+                    <a id="rollback" style="font-size: large; float: top;text-align: center;font-family: 等线;background-color: pink;border-radius: 5px;" th:href="'/rollback?projectid='+${projectid}" th:if="${not #strings.isEmpty(msg)}">链中出现异常，点击恢复。</a>
                     <div class="card">
                         <div class="card-header">
                             <strong class="card-title">Data Table </strong>
@@ -202,7 +204,7 @@
 <script src="js/bootstrap-datetimepicker.js"></script>
 <script src="js/bootstrap-datetimepicker.zh-CN.js"></script>
 <script type="text/javascript" src="js/JQuery/jquery-3.4.1.min.js"></script>
-<script type="text/javascript" src="js/projectcache_function.js"></script>
+<script type="text/javascript" src="js/reportrecord_function.js"></script>
 
 
 

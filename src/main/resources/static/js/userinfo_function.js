@@ -20,6 +20,17 @@ $(document).ready(function () {
         };
         $.ajax({
             url : '/ajaxupdateuserinfo',
+            data : param,
+            type : 'post',
+            contentType: 'application/x-www-form-urlencoded',
+            success : function (message) {
+                if(message == 'success')
+                    alert('修改成功！');
+            },
+            error : function () {
+                alert('提交失败！');
+            }
+
         })
     })
 })

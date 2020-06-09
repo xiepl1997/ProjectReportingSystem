@@ -71,4 +71,12 @@ public interface ProjectMapper {
 
     @Update("update project set filepath = #{filepath} where projectid = #{projectid}")
     boolean updatefile(@Param("projectid") int projectid, @Param("filepath") String filepath);
+
+    /**
+     * 获取团队的横向或纵向项目数量
+     * @param teamid
+     * @return
+     */
+    @Select("select count(projectid) from project where type=#{type} and projectid in (select distinct(projectid) from team_project where teamid=#{teamid})")
+    int getHorizontalproject(@Param("teamid")int teamid, @Param("type")String type);
 }

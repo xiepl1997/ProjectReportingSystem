@@ -43,4 +43,9 @@ public class UserService implements IUserService {
     public int deleteMember(String email, int teamid) {
         return userMapper.deleteMember(email, teamid);
     }
+
+    @Override
+    public boolean updateuser(String email, String name, String phone, String sex, String school, String college) {
+        return userMapper.updateuser(email, name,phone,sex,school,college);
+    }
 }

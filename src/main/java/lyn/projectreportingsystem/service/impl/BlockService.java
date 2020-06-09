@@ -33,4 +33,9 @@ public class BlockService implements IBlockService {
     public Block getlasterblock(String projectid) {
         return blockMapper.getlasterblock(projectid);
     }
+
+    @Override
+    public boolean deleteblockbytimestamp(String projectid, String timestamp) {
+        return blockMapper.deleteblockbytimestamp(projectid, timestamp);
+    }
 }
