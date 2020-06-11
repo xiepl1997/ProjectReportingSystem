@@ -88,8 +88,8 @@ public class Block {
         nonce = 0;
         String target = new String(new char[difficulty]).replace('\0', '0');
         while(!hash.substring( 0, difficulty).equals(target)) {
-            nonce ++;
-            hash = calculateHash();
+                nonce ++;
+                hash = calculateHash();
         }
         System.out.println("Block Mined!!! : " + hash);
     }

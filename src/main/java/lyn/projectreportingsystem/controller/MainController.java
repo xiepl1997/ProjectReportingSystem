@@ -433,7 +433,7 @@ public class MainController {
             projectService.updatesubmitproject(Integer.parseInt(projectid),
                     projectname,starttime,endtime,Float.parseFloat(money),type,tertiarydiscipline,projectremark);
             List<Block> blockList = blockService.getblockbyprojectid(projectid);
-            String previous_hash = blockList.get(0).getHash();
+            String previous_hash = blockList.get(blockList.size()-1).getHash();
             Block block = new Block(((User)user).getEmail(),projectid,projectname,starttime,endtime,Float.parseFloat(money),type,tertiarydiscipline,projectremark,"",previous_hash);
             block.mineBlock(2);
             blockService.insertblock(block);
